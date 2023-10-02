@@ -1,9 +1,10 @@
-import Checkout from './pages/index'
+import Checkout from './containers/Checkout.jsx'
+import { addons } from './data/JSMastery.js';
 
 function App() {
   return (
     <div>
-     <Checkout/>
+     <Checkout addons = {addons}/>
     </div>
   );
 }

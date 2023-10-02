@@ -1,6 +1,10 @@
+import { useState } from "react";
 import InputError from "./InputError";
 
-const UserDetails = ({error}) => {
+const UserDetails = (props) => {
+
+  const {handleChange, handleSubmit, firstName, lastName, email, errors, phone} = props;
+
   return (
     <div data-w-tab="Tab 1" className="w-tab-pane">
       <div className="w-layout-blockcontainer container-22 w-container">
@@ -13,6 +17,8 @@ const UserDetails = ({error}) => {
             className="form-6"
             data-wf-page-id="64fda7155a16efb4bef04c53"
             data-wf-element-id="a62be3bb-9b5e-1d27-c841-e931c1693448"
+            onChange={handleChange}
+            onSubmit={handleSubmit}
           >
             <div className="w-layout-grid grid-8">
               <label
@@ -33,24 +39,26 @@ const UserDetails = ({error}) => {
                 type="text"
                 className="text-field-2 w-input"
                 maxLength="256"
-                name="name-3"
+                name="firstName"
                 data-name="Name 3"
                 placeholder="First Name*"
                 id="name-3"
                 required=""
+                value={firstName}
               />
               <input
                 type="text"
                 className="text-field-2 w-input"
                 maxLength="256"
-                name="name-2"
+                name="lastName"
                 data-name="Name 2"
                 placeholder="Last Name*"
                 id="name-2"
                 required=""
+                value={lastName}
               />
-              {error ? <InputError fieldName={"First Name"} /> : <></>}
-              {error ? <InputError fieldName={"Last Name"} /> : <></>}
+              {errors.firstName && <InputError fieldName={"First Name"} />}
+              {errors.lastName && <InputError fieldName={"Last Name"} />}
             </div>
             <label htmlFor="email-2" className="field-label-4">
               Email Address <span className="text-span-13">*</span>
@@ -59,13 +67,14 @@ const UserDetails = ({error}) => {
               type="email"
               className="w-input"
               maxLength="256"
-              name="email-2"
+              name="email"
               data-name="Email 2"
               placeholder="Email address *"
               id="email-2"
               required=""
+              value={email}
             />
-            {error ? <InputError fieldName={"Email"} /> : <></>}
+            {errors.email && <InputError fieldName={"Email"} />}
             <label htmlFor="Phone-2" className="field-label-4">
               Phone Number <span className="text-span-14">*</span>
             </label>
@@ -73,13 +82,14 @@ const UserDetails = ({error}) => {
               type="tel"
               className="w-input"
               maxLength="256"
-              name="Phone-2"
+              name="phone"
               data-name="Phone 2"
               placeholder="Phone Number*"
               id="Phone-2"
               required=""
+              value={phone}
             />
-            {error ? <InputError fieldName={"Phone Number"} /> : <></>}
+            {errors.phone && <InputError fieldName={"Phone Number"} />}
             <label htmlFor="field-2" className="field-label-4">
               Country/Region <span className="text-span-15">*</span>
             </label>
@@ -91,9 +101,6 @@ const UserDetails = ({error}) => {
               className="select-field w-select"
             >
               <option value="">India</option>
-              <option value="First">First choice</option>
-              <option value="Second">Second choice</option>
-              <option value="Third">Third choice</option>
             </select>
             <button
               type="submit"
@@ -118,3 +125,4 @@ const UserDetails = ({error}) => {
 };
 
 export default UserDetails;
+

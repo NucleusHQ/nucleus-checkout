@@ -5,11 +5,14 @@ import Header from "../components/Header";
 import CheckoutForm from "../components/CheckoutForm";
 import Footer from "../components/Footer";
 
-const Checkout = () => {
+const Checkout = (props) => {
+
+  const {addons} = props;
+
   return (
     <div className="body">
       <Header />
-      <CheckoutForm />
+      <CheckoutForm addons = {addons} />
       <Footer/>
     </div>
   );

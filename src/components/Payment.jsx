@@ -1,7 +1,25 @@
 import rzpPayment from "../assets/images/rzp_payment_icon.svg";
-import CourseCard from "./CourseCard";
+import AddonCard from "./AddonCard";
+import ItemLabel from "./ItemLabel";
 
-const Payment = () => {
+const Payment = ({addons, selectedProductIds, setSelectedProductIds}) => {
+
+  const selectedAddons = addons.filter((addon) =>
+    selectedProductIds.includes(addon.productId)
+  );
+
+  // Initialize a variable to store the total price
+  let totalPrice = Number(addons[0].price);
+
+  // Loop through selectedAddons and add their prices to totalPrice
+  selectedAddons.forEach((addon) => {
+    totalPrice += parseFloat(addon.price); // Assuming the price is in string format
+  });
+
+  // Round totalPrice to 2 decimal places
+  totalPrice = totalPrice.toFixed(2);
+
+
   return (
     <div data-w-tab="Tab 2" className="tab-pane-tab-2">
       <section className="section-9">
@@ -18,43 +36,11 @@ const Payment = () => {
       </section>
       <section>
         <ul role="list" className="list-3 w-list-unstyled">
-          <li className="list-item-1">
-            <div className="w-layout-blockcontainer container-28 w-container">
-              <div className="text-block-28">
-                LinkedIn 5 Day Workshop – Batch 71
-              </div>
-              <div className="text-block-28 mid">
-                ‍<strong>× 1</strong>
-              </div>
-            </div>
-            <div className="w-layout-blockcontainer container-29 w-container">
-              <div className="text-block-29">₹499.20</div>
-            </div>
-          </li>
-          <li className="list-item-02">
-            <div className="w-layout-blockcontainer container-28 w-container">
-              <div className="text-block-28">
-                LinkedIn Workshop Recordings ( Lifetime Access + Updates )
-              </div>
-              <div className="text-block-28 mid">
-                ‍<strong>× 1</strong>
-              </div>
-            </div>
-            <div className="w-layout-blockcontainer container-29 w-container">
-              <div className="text-block-29">₹499.20</div>
-            </div>
-          </li>
-          <li className="list-item-03 bottom">
-            <div className="w-layout-blockcontainer container-28 w-container">
-              <div className="text-block-28">100+ Growth Hacks</div>
-              <div className="text-block-28 mid">
-                ‍<strong>× 1</strong>
-              </div>
-            </div>
-            <div className="w-layout-blockcontainer container-29 w-container">
-              <div className="text-block-29">₹499.20</div>
-            </div>
-          </li>
+          <ItemLabel label = {addons[0].label} price = {addons[0].price}/>
+          {selectedAddons.map(addon => {
+            const {label, price} = addon; 
+            return <ItemLabel label = {label} price={price}/>
+          })}
         </ul>
       </section>
       <section className="section-10">
@@ -84,7 +70,7 @@ const Payment = () => {
           </div>
           <div className="w-layout-blockcontainer container-27 w-container">
             <div className="text-block-27">
-              ₹<strong>3000</strong>
+              ₹<strong>{totalPrice}</strong>
             </div>
           </div>
         </div>
@@ -126,7 +112,16 @@ const Payment = () => {
           </div>
         </div>
       </section>
-      <CourseCard />
+      {addons.filter(item => item.type == "addon").map(addon => {
+
+        const {productId} = addon;
+
+        const isSelected = selectedProductIds.includes(productId);
+
+        return <AddonCard addon = {addon} setSelectedProductIds = {setSelectedProductIds} selectedProductIds = {selectedProductIds} isSelected = {isSelected} />
+        })
+      }
+      {/* <AddonCard addons = {addons} /> */}
       <section className="section-15">
         <div className="div-block-12">
           <div className="w-layout-blockcontainer container-30 w-container">

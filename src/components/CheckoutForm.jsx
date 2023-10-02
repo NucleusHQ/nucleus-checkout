@@ -2,9 +2,134 @@ import { useState } from "react";
 import Payment from "./Payment";
 import UserDetails from "./UserDetails";
 
-const CheckoutForm = () => {
+const CheckoutForm = (props) => {
+
+  const {addons} = props;
+
   const [activeTab, setActiveTab] = useState(true);
   const [error, setError] = useState(true);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    phone: false,
+  });
+
+  const handleChange = (e) => {
+    
+    const { name, value } = e.target;
+
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+
+    switch (name) {
+      case "firstName":
+        if (!value.trim()) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            firstName: "First Name is required",
+          }));
+        }
+        break;
+      case "lastName":
+        if (!value.trim()) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            lastName: "Last Name is required",
+          }));
+        }
+        break;
+      case "email":
+        if (!value.trim()) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "Email is required",
+          }));
+        } else if (!isValidEmail(value)) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "Invalid email format",
+          }));
+        }
+        break;
+      case "phone":
+        if (!value.trim()) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            phone: "Phone Number is required",
+          }));
+        } else if (!isValidPhoneNumber(value)) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            phone: "Invalid phone number format",
+          }));
+        }
+        break;
+      default:
+        break;
+    }
+
+    // Update state with the input value
+    switch (name) {
+      case "firstName":
+        setFirstName(value);
+        break;
+      case "lastName":
+        setLastName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "phone":
+        setPhone(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const validateInput = (name, value) => {
+    return value.trim() !== "";
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Validate all fields on form submission
+    const isFirstNameValid = validateInput("firstName", firstName);
+    const isLastNameValid = validateInput("lastName", lastName);
+    const isEmailValid = validateInput("email", email);
+    const isPhoneValid = validateInput("phone", phone);
+
+    // Set errors for all fields based on validation result
+    setErrors({
+      firstName: !isFirstNameValid,
+      lastName: !isLastNameValid,
+      email: !isEmailValid,
+      phone: !isPhoneValid
+    });
+
+    if (isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid) {
+        //api call to register activity 
+        setActiveTab("2");
+    }
+  };
+
+  const isValidEmail = (email) => {
+    // Add your email validation logic here
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const isValidPhoneNumber = (phone) => {
+    // Add your phone number validation logic here
+    return /^[0-9]{10}$/.test(phone);
+  };
+
 
   return (
     <div className="content-form-block-2">
@@ -27,7 +152,7 @@ const CheckoutForm = () => {
               <a
                 data-w-tab="Tab 1"
                 className={`tab-link-tab-2 tab w-inline-block w-tab-link ${
-                  activeTab ? "w--current" : ""
+                  activeTab == "1" ? "w--current" : ""
                 }`}
                 onClick={() => setActiveTab(true)}
               >
@@ -45,9 +170,9 @@ const CheckoutForm = () => {
                 data-w-tab="Tab 2"
                 second="2"
                 className={`tab-link-tab-2 tab w-inline-block w-tab-link ${
-                  !activeTab ? "w--current" : ""
+                  activeTab== "2" ? "w--current" : ""
                 }`}
-                onClick={() => setActiveTab(false)}
+                onClick={handleSubmit}
               >
                 <div className="text-block-18 _1">
                   <strong className="bold-text-9">2</strong>
@@ -60,10 +185,19 @@ const CheckoutForm = () => {
               </a>
             </div>
             <div className="w-tab-content">
-              {activeTab ? (
-                <UserDetails error={error} />
+              {activeTab == "1" ? (
+                <UserDetails 
+                  error={error} 
+                  handleChange={handleChange} 
+                  handleSubmit={handleSubmit}
+                  firstName={firstName} 
+                  lastName={lastName}
+                  errors={errors} 
+                  phone={phone}
+                  email={email}
+                />
               ) : (
-                <Payment />
+                <Payment addons = {addons} selectedProductIds = {selectedProductIds} setSelectedProductIds = {setSelectedProductIds} />
               )}
             </div>
           </div>

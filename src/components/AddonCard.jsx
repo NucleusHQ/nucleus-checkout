@@ -1,4 +1,18 @@
-const CourseCard = () => {
+const CourseCard = ({addon, setSelectedProductIds, isSelected, selectedProductIds}) => {
+
+  const {label, title, description, ps, note, price, strikeThroughPrice, productId} = addon;
+
+  const toggleCheck = () => {
+    
+    if (selectedProductIds.includes(productId)) {
+      const updatedProductIds = selectedProductIds.filter((id) => id !== productId);
+      setSelectedProductIds(updatedProductIds);
+    } else {
+      setSelectedProductIds([...selectedProductIds, productId]);
+    }
+  };
+  
+  
   return (
     <section className="section-14">
       <div className="form-block-3 w-form">
@@ -13,30 +27,24 @@ const CourseCard = () => {
         >
           <div className="div-block-13">
             <h4>
-              <strong className="bold-text-11">
-                Get Lifetime Access to recordings &amp; Lifetime Updates for
-                ₹499/-
-              </strong>
+              <strong className="bold-text-11">{title}</strong>
             </h4>
             <p className="paragraph">
-              Stay up-to-date with the ever-evolving LinkedIn platform and gain
-              lifetime access to my content updates and recordings! Get all of
-              this for just ₹499/-. That&#x27;s a crazy flat ₹2000 off {":)"}
+              {description}
               <br />
               <br />
-              PS: I have updated the content 3 times in the last 1 year.
+              {ps}
               <br />
               <br />‍
               <strong>
-                (You should definitely opt-in for this if you&#x27;re unsure
-                about being available during the workshop timings!)
+                {note}
                 <br />
                 <br />
                 <br />
               </strong>
-              <span className="text-span-9">₹9,999.00</span>
+              <span className="text-span-9">₹{strikeThroughPrice}</span>
               <span className="text-span-8">
-                <strong> ₹1,999.00</strong>
+                <strong> ₹{price}</strong>
               </span>
             </p>
           </div>
@@ -47,6 +55,8 @@ const CourseCard = () => {
               id="checkbox"
               name="checkbox"
               data-name="Checkbox"
+              onChange={toggleCheck}
+              checked={isSelected}
               className="w-checkbox-input checkbox"
             />
             <span className="checkbox-label w-form-label" htmlFor="checkbox">
@@ -54,6 +64,7 @@ const CourseCard = () => {
             </span>
           </label>
         </form>
+        
       </div>
     </section>
   );
