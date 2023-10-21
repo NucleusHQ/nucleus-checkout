@@ -1,14 +1,14 @@
-const CourseCard = ({addon, setSelectedProductIds, isSelected, selectedProductIds}) => {
+const AddonCard = ({addon, setSelectedAddonIds, isSelected, selectedAddonIds}) => {
 
-  const {label, title, description, ps, note, price, strikeThroughPrice, productId} = addon;
+  const {promoPrice, strikeThroughPrice, id: addonId, line1, line2, line3, line4} = addon;
 
   const toggleCheck = () => {
     
-    if (selectedProductIds.includes(productId)) {
-      const updatedProductIds = selectedProductIds.filter((id) => id !== productId);
-      setSelectedProductIds(updatedProductIds);
+    if (selectedAddonIds.includes(addonId)) {
+      const updatedProductIds = selectedAddonIds.filter((id) => id !== addonId);
+      setSelectedAddonIds(updatedProductIds);
     } else {
-      setSelectedProductIds([...selectedProductIds, productId]);
+      setSelectedAddonIds([...selectedAddonIds, addonId]);
     }
   };
   
@@ -27,24 +27,24 @@ const CourseCard = ({addon, setSelectedProductIds, isSelected, selectedProductId
         >
           <div className="div-block-13">
             <h4>
-              <strong className="bold-text-11">{title}</strong>
+              <strong className="bold-text-11">{line1}</strong>
             </h4>
             <p className="paragraph">
-              {description}
+              {line2}
               <br />
               <br />
-              {ps}
+              {line3}
               <br />
               <br />‍
               <strong>
-                {note}
+                {line4}
                 <br />
                 <br />
                 <br />
               </strong>
               <span className="text-span-9">₹{strikeThroughPrice}</span>
               <span className="text-span-8">
-                <strong> ₹{price}</strong>
+                <strong> ₹{promoPrice}</strong>
               </span>
             </p>
           </div>
@@ -70,4 +70,4 @@ const CourseCard = ({addon, setSelectedProductIds, isSelected, selectedProductId
   );
 };
 
-export default CourseCard;
+export default AddonCard;

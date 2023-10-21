@@ -1,23 +1,18 @@
-import rzpPayment from "../assets/images/rzp_payment_icon.svg";
-import AddonCard from "./AddonCard";
+import { calculateFullPrice } from "../utils";
+import AddonsList from "./AddonsList";
+import InstructionsSection from "./Instructions";
 import ItemLabel from "./ItemLabel";
+import PaymentGatewaySection from "./PaymentGatewaySection";
 
-const Payment = ({addons, selectedProductIds, setSelectedProductIds}) => {
+const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, email, phone}) => {
+
+  const {price: programPrice, strikeThroughPrice: programStrikeThroughPrice, title: programTitle} = programInfo;
 
   const selectedAddons = addons.filter((addon) =>
-    selectedProductIds.includes(addon.productId)
+    selectedAddonIds.includes(addon.id)
   );
 
-  // Initialize a variable to store the total price
-  let totalPrice = Number(addons[0].price);
-
-  // Loop through selectedAddons and add their prices to totalPrice
-  selectedAddons.forEach((addon) => {
-    totalPrice += parseFloat(addon.price); // Assuming the price is in string format
-  });
-
-  // Round totalPrice to 2 decimal places
-  totalPrice = totalPrice.toFixed(2);
+  const {subTotal, gst, discount, discountPercentage, totalPayable} = calculateFullPrice(programInfo, addons, selectedAddonIds);
 
 
   return (
@@ -36,10 +31,10 @@ const Payment = ({addons, selectedProductIds, setSelectedProductIds}) => {
       </section>
       <section>
         <ul role="list" className="list-3 w-list-unstyled">
-          <ItemLabel label = {addons[0].label} price = {addons[0].price}/>
+          <ItemLabel label = {programTitle} price = {programStrikeThroughPrice}/>
           {selectedAddons.map(addon => {
-            const {label, price} = addon; 
-            return <ItemLabel label = {label} price={price}/>
+            const {title, price, strikeThroughPrice} = addon; 
+            return <ItemLabel label = {title} price={strikeThroughPrice}/>
           })}
         </ul>
       </section>
@@ -49,15 +44,23 @@ const Payment = ({addons, selectedProductIds, setSelectedProductIds}) => {
             <div>Subtotal</div>
           </div>
           <div className="w-layout-blockcontainer container-27 w-container">
-            <div className="text-block-27">₹2,997.20</div>
+            <div className="text-block-27">₹{subTotal}</div>
           </div>
         </div>
         <div className="gst_div">
           <div className="w-layout-blockcontainer container-26 w-container">
-            <div>GST</div>
+            <div>GST @ 18%</div>
           </div>
           <div className="w-layout-blockcontainer container-27 w-container">
-            <div className="text-block-27">₹297.80</div>
+            <div className="text-block-27">₹{gst}</div>
+          </div>
+        </div>
+        <div className="gst_div green">
+          <div className="w-layout-blockcontainer container-26 w-container">
+            <div>Discount ({discountPercentage}%)</div>
+          </div>
+          <div className="w-layout-blockcontainer container-27 w-container">
+            <div className="text-block-27">-₹{discount}</div>
           </div>
         </div>
       </section>
@@ -65,12 +68,12 @@ const Payment = ({addons, selectedProductIds, setSelectedProductIds}) => {
         <div className="total_div">
           <div className="w-layout-blockcontainer container-26 w-container">
             <div>
-              <strong>Total</strong>
+              <strong>Total Payable</strong>
             </div>
           </div>
           <div className="w-layout-blockcontainer container-27 w-container">
             <div className="text-block-27">
-              ₹<strong>{totalPrice}</strong>
+              ₹<strong>{totalPayable}</strong>
             </div>
           </div>
         </div>
@@ -112,72 +115,13 @@ const Payment = ({addons, selectedProductIds, setSelectedProductIds}) => {
           </div>
         </div>
       </section>
-      {addons.filter(item => item.type == "addon").map(addon => {
-
-        const {productId} = addon;
-
-        const isSelected = selectedProductIds.includes(productId);
-
-        return <AddonCard addon = {addon} setSelectedProductIds = {setSelectedProductIds} selectedProductIds = {selectedProductIds} isSelected = {isSelected} />
-        })
-      }
-      {/* <AddonCard addons = {addons} /> */}
-      <section className="section-15">
-        <div className="div-block-12">
-          <div className="w-layout-blockcontainer container-30 w-container">
-            <div className="text-block-33">
-              <strong className="bold-text-6">
-                Credit Card/Debit Card/NetBanking{" "}
-              </strong>
-            </div>
-            <img
-              width="189"
-              loading="lazy"
-              alt=""
-              src={rzpPayment}
-              className="image-3"
-            />
-          </div>
-          <div className="w-layout-blockcontainer container-31 w-container">
-            <div className="text-block-37">
-              Pay securely by Credit or Debit card or Internet Banking through
-              Razorpay.
-            </div>
-          </div>
-        </div>
-        <div className="form-block-2 w-form">
-          <form
-            id="email-form-4"
-            name="email-form-4"
-            data-name="Email Form 4"
-            method="get"
-            data-wf-page-id="64fda7155a16efb4bef04c53"
-            data-wf-element-id="37ce50dc-c5ee-add9-eb7f-e318a236fc77"
-          >
-            <label htmlFor="name" className="field-label-9">
-              Your personal data will be used to process your order, support
-              your experience throughout this website, and for other purposes
-              described in our{" "}
-              <a href="#" target="_blank">
-                privacy policy
-              </a>
-              .
-            </label>
-            <a href="#" className="submit-button-5 w-button">
-              Place Order{" "}
-              <span>
-                <strong className="bold-text-5">₹1,999.00</strong>
-              </span>
-            </a>
-          </form>
-          <div className="w-form-done">
-            <div>Thank you! Your submission has been received!</div>
-          </div>
-          <div className="w-form-fail">
-            <div>Oops! Something went wrong while submitting the form.</div>
-          </div>
-        </div>
-      </section>
+          
+      <AddonsList addons = {addons} setSelectedAddonIds = {setSelectedAddonIds} selectedAddonIds = {selectedAddonIds}/>
+      <InstructionsSection 
+        email={email}
+        phone={phone}
+      />
+      <PaymentGatewaySection />
     </div>
   );
 };

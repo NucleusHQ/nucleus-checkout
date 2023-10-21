@@ -1,14 +1,15 @@
 import { useState } from "react";
-import Payment from "./Payment";
-import UserDetails from "./UserDetails";
+import PaymentTabContent from "./Payment";
+import UserDetailsTabContent from "./UserDetails";
+
 
 const CheckoutForm = (props) => {
 
-  const {addons} = props;
+  const {addons, formTitle, primaryBtnContent, programInfo} = props;
 
   const [activeTab, setActiveTab] = useState(true);
   const [error, setError] = useState(true);
-  const [selectedProductIds, setSelectedProductIds] = useState([]);
+  const [selectedAddonIds, setSelectedAddonIds] = useState([]);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -137,8 +138,7 @@ const CheckoutForm = (props) => {
         <div className="w-layout-blockcontainer w-container">
           <div className="offer-message">
             <div className="text-block-34">
-              Get LinkedIn Workshop for special price of{" "}
-              <strong>Rs 499 </strong>only
+              {formTitle}
             </div>
           </div>
           <div
@@ -186,7 +186,7 @@ const CheckoutForm = (props) => {
             </div>
             <div className="w-tab-content">
               {activeTab == "1" ? (
-                <UserDetails 
+                <UserDetailsTabContent 
                   error={error} 
                   handleChange={handleChange} 
                   handleSubmit={handleSubmit}
@@ -195,9 +195,17 @@ const CheckoutForm = (props) => {
                   errors={errors} 
                   phone={phone}
                   email={email}
+                  primaryBtnContent={primaryBtnContent}
                 />
               ) : (
-                <Payment addons = {addons} selectedProductIds = {selectedProductIds} setSelectedProductIds = {setSelectedProductIds} />
+                <PaymentTabContent 
+                  addons = {addons} 
+                  selectedAddonIds = {selectedAddonIds} 
+                  setSelectedAddonIds = {setSelectedAddonIds} 
+                  programInfo={programInfo}
+                  email={email}
+                  phone={phone}
+                  />
               )}
             </div>
           </div>

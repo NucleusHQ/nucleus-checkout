@@ -1,0 +1,46 @@
+{
+    "101": {
+        "paid": {
+            "headerTitle": "You're one step closer from building your dream project!", 
+            "formTitle": "Attend the masterclass for a special price of Rs 499 only", 
+            "primaryBtnContent": {
+                "line1": "For Special Offers Click Here", 
+                "line2": "Yes! I want This Offer!"
+            }, 
+            "programInfo": {
+                "title": "Building a Jaw-Dropping Chat App", 
+                "promoPrice": "499", 
+                "strikeThroughPrice": "1499"
+            }, 
+            "addons": [
+                {
+                    "id": "addon-1",
+                    "title": "LinkedIn Workshop Recordings ( Lifetime Access + Updates )", 
+                    "promoPrice": "499.00",
+                    "strikeThroughPrice": "1999.00",
+                    "line1": "Get Lifetime Access to recordings & Lifetime Updates for ₹499/-",
+                    "line2": "Stay up-to-date with the ever-evolving LinkedIn platform and gain lifetime access to my content updates and recordings! Get all of this for just ₹499/-",
+                    "line3": "PS: I have updated the content 3 times in the last 1 year.",
+                    "line4": "‍(You should definitely opt-in for this if you're unsure about being available during the workshop timings!)"
+                }, 
+                {
+                    "id": "addon-2",
+                    "title": "LinkedIn Workshop Recordings ( Lifetime Access + Updates )", 
+                    "promoPrice": "1999.00",
+                    "strikeThroughPrice": "9999.00",
+                    "line1": "Get Lifetime Access to recordings & Lifetime Updates for ₹499/-",
+                    "line2": "Stay up-to-date with the ever-evolving LinkedIn platform and gain lifetime access to my content updates and recordings! Get all of this for just ₹499/-",
+                    "line3": "PS: I have updated the content 3 times in the last 1 year.",
+                    "line4": "‍(You should definitely opt-in for this if you're unsure about being available during the workshop timings!)"
+                }
+            ]
+        }, 
+        "free": {
+            "headerTitle": "You're one step closer from building a jaw-dropping Chat App for your portfolio!", 
+            "formTitle": "Attend Building a Chat App workshop for FREE", 
+            "primaryBtnContent": {
+                "line1": "Reserve my seat for FREE"
+            }
+        }
+    }
+}

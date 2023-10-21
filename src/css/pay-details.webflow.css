@@ -1675,6 +1675,7 @@
 
 .text-payment {
   width: 100%;
+  /* padding: 15px 0; */
   height: 75px;
   color: #fff;
   text-align: center;
@@ -2439,6 +2440,7 @@
 
 .list-item-1 {
   margin-top: 10px;
+  margin-bottom: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   display: flex;
@@ -2466,6 +2468,7 @@
 
 .text-block-28 {
   width: 80%;
+  font-size: 14px;
   justify-content: flex-start;
   align-items: center;
   display: flex;
@@ -2539,6 +2542,7 @@
   margin-top: 10px;
   margin-bottom: 0;
   display: flex;
+  font-weight: 700;
 }
 
 .gst_div {
@@ -2546,6 +2550,12 @@
   justify-content: center;
   margin-top: 10px;
   display: flex;
+}
+
+.gst_div.green {
+  color: green;
+  font-weight: 500;
+  
 }
 
 .total_div {
@@ -2562,8 +2572,9 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 0;
-  padding-bottom: 25px;
+  /* padding-bottom: 25px; */
   display: flex;
+  padding: 6px 0px
 }
 
 .form-7 {
@@ -3065,7 +3076,7 @@
     font-family: IBM Plex Sans, sans-serif;
     font-size: 28px;
     font-weight: 500;
-    line-height: 6px;
+    padding: 0 10px
   }
 
   .payment-heaeding-img-2 {
@@ -3111,7 +3122,7 @@
 
   .text-container {
     width: 98%;
-    height: 17%;
+    height: 25%;
     min-height: 60px;
     flex-direction: row;
     justify-content: center;
@@ -3473,7 +3484,7 @@
     width: auto;
   }
   .caption {
-    margin-bottom: 35px !important;
+    margin-bottom: 20px !important;
   }
 }
 
@@ -3500,7 +3511,6 @@
   .text-payment {
     font-size: 20px;
     font-weight: 500;
-    height: 50px;
   }
 
   .payment-heaeding-img-2 {
@@ -3796,7 +3806,7 @@
   }
 
   .container-15 {
-    width: 50%;
+    width: 43%;
     height: 87%;
     margin-left: 8px;
     padding: 5px;
@@ -3846,6 +3856,8 @@
   .text-payment {
     font-size: 16px;
     line-height: 24px;
+    width: 90%;
+    
   }
 
   .heading-img {
