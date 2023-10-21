@@ -1,6 +1,7 @@
 import rzpPayment from "../assets/images/rzp_payment_icon.svg";
 
-const PaymentGatewaySection = () => {
+const PaymentGatewaySection = (props) => {
+    const {handleRazorpayDisplay} = props;
     return (
         <section className="section-15">
         <div className="div-block-12">
@@ -43,12 +44,12 @@ const PaymentGatewaySection = () => {
               </a>
               .
             </label>
-            <a href="#" className="submit-button-5 w-button">
+            <div onClick={handleRazorpayDisplay} href="#" className="submit-button-5 w-button">
               Place Order{" "}
               <span>
                 <strong className="bold-text-5">₹1,999.00</strong>
               </span>
-            </a>
+            </div>
           </form>
           <div className="w-form-done">
             <div>Thank you! Your submission has been received!</div>

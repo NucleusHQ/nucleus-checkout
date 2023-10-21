@@ -1269,6 +1269,18 @@
   display: flex;
 }
 
+.tab-link-tab-2.free {
+  width: 100%;
+  background-color: rgba(195, 189, 189, .14);
+  border: 2px #000;
+  flex-direction: row;
+  align-items: stretch;
+  padding-left: 30px;
+  padding-right: 30px;
+  justify-content: center;
+  display: flex;
+}
+
 .tab-link-tab-2.tab.w--current {
   opacity: 1;
   mix-blend-mode: normal;

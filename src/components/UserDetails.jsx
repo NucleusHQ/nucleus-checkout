@@ -5,8 +5,6 @@ const UserDetails = (props) => {
 
   const {handleChange, handleSubmit, firstName, lastName, email, errors, phone, primaryBtnContent} = props;
 
-
-
   return (
     <div data-w-tab="Tab 1" className="w-tab-pane">
       <div className="w-layout-blockcontainer container-22 w-container">
