@@ -1,7 +1,7 @@
 {
     "101": {
         "paid": {
-            "headerTitle": "You're one step closer from building your dream project!", 
+            "headerTitle": "You're one step closer from building a jaw-dropping Chat App!", 
             "formTitle": "Attend the masterclass for a special price of Rs 499 only", 
             "primaryBtnContent": {
                 "line1": "For Special Offers Click Here", 
@@ -36,7 +36,7 @@
             ]
         }, 
         "free": {
-            "headerTitle": "You're one step closer from building a jaw-dropping Chat App for your portfolio!", 
+            "headerTitle": "You're one step closer from building a jaw-dropping Chat App!", 
             "formTitle": "Attend Building a Chat App workshop for FREE", 
             "primaryBtnContent": {
                 "line1": "Reserve my seat for FREE"

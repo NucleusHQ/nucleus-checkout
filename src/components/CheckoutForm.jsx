@@ -6,16 +6,15 @@ import TabList from "./TabList";
 
 const CheckoutForm = (props) => {
 
-  const {addons, formTitle, primaryBtnContent, programInfo, isPaid, handleRazorpayDisplay} = props;
+  const {addons, formTitle, primaryBtnContent, programInfo, isPaid, handleRazorpayDisplay,
+    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone
+  } = props;
+
 
   const [activeTab, setActiveTab] = useState(true);
   const [error, setError] = useState(true);
   const [selectedAddonIds, setSelectedAddonIds] = useState([]);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
 
   const [errors, setErrors] = useState({
     firstName: false,
@@ -131,8 +130,6 @@ const CheckoutForm = (props) => {
     // Add your phone number validation logic here
     return /^[0-9]{10}$/.test(phone);
   };
-
-  console.log(isPaid, "isPaid")
 
 
   return (

@@ -9,94 +9,82 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import tofu from "./content/tofu.json";
 import course from "./content/course.json";
+import { getRazorPayOptions, loadRazorPay } from './utils.js';
+import { razorpayLoadLink } from './constants.js';
+import config from './config.js';
 
-
-function loadRazorPay(src = "https://checkout.razorpay.com/v1/checkout.js") {
-
-  return new Promise((resolve, reject) => {
-
-    const script = document.createElement("script");
-
-    script.src = src;
-    document.body.appendChild(script);
-    script.onload = () => {
-      resolve(true)
-    }
-
-    script.onerror = () => {
-      resolve(false)
-    }
-
-    document.body.appendChild(script)
-
-  })
-}
-
-const __DEV__ = document.domain === "localhost";
 
 function AppContainer() {
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  
   const location = useLocation();
 
   const query = new URLSearchParams(location.search);
   const type = query.get('type');
   const programId = query.get('programId');
-  const isPaid = query.get('isPaid');
+  const isPaid = query.get('isPaid') == "true" ? true : false;
 
   let relevantData;
   
   if (type === 'tofu') {
+
     relevantData = tofu[programId][isPaid ? 'paid' : 'free'];
-  } else if (type === 'program') {
+  } else if (type === 'course') {
     relevantData = course[programId][isPaid ? 'paid' : 'free'];
   } else {
-    console.log('Invalid type provided.');
+    return <div>Invalid file</div>
   }
 
   const { addons, formTitle, headerTitle, primaryBtnContent, programInfo } = relevantData || {};
+  const {title: programtitle} = programInfo || {};
 
-  async function handleRazorpayDisplay() {
+  // -----------------------------
 
-    const res = await loadRazorPay("https://checkout.razorpay.com/v1/checkout.js");
+  async function handleRazorpayDisplay(totalPayable) {
+
+    const res = await loadRazorPay(razorpayLoadLink);
 
     if(!res) {
       alert("Razorpay SDK failed to load. Please try again later")
       return
     }
 
-    const data = await fetch("http://localhost:3000/razorpay", {
-      method: "POST"
-    }).then(res => res.json());
+    const rzOrderResponse = await fetch(config.razorpay, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: totalPayable
+      }), 
+    })
+    .then(res => res.json())
+    .catch(err => {
+      console.error(err);
+    })
 
+  const userInfo = {
+    fullName: firstName + " " + lastName, 
+    phone: "91" + phone, 
+    email: email, 
+    tofuId: type == "tofu" && programId
+  }
 
-    const options = {
-      "key": __DEV__ ? "rzp_test_AfDEedK2bfu2QD" : "PRODUCTION_KEY", // Enter the Key ID generated from the Dashboard
-      "name": "Nucleus HQ",
-      "amount": data.amount.toString(), 
-      "currency": data.currency,
-      "description": "Thank you for nothing. Please give us some money",
-      "image": "https://example.com/your_logo",
-      "order_id": data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      "handler": function (response){
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature)
-      },
-      "prefill": {
-          "name": "Gaurav Kumar",
-          "email": "gaurav.kumar@example.com",
-          "contact": "9000090000"
-      },
-      "notes": {
-          "address": "Razorpay Corporate Office"
-      },
-      "theme": {
-          "color": "#3399cc"
-      }
-  };
+  const programInfo = {
+    programId, 
+    type, 
+    programtitle
+  }
+
+  const options = getRazorPayOptions(rzOrderResponse, userInfo, programInfo);
 
   const paymentObject = new window.Razorpay(options);  
   paymentObject.open();
+
 }
 
   return (
@@ -111,6 +99,14 @@ function AppContainer() {
         programInfo={programInfo}
         isPaid={isPaid}
         handleRazorpayDisplay={handleRazorpayDisplay}
+        firstName={firstName}
+        setFirstName={setFirstName}
+        lastName={lastName}
+        setLastName={setLastName}
+        email={email}
+        setEmail={setEmail}
+        phone={phone}
+        setPhone={setPhone}
       />
       <Footer />
     </div>
@@ -119,8 +115,3 @@ function AppContainer() {
 }
 
 export default AppContainer;
-
-
-// rzp_test_AfDEedK2bfu2QD
-
-// qVT0ZNFsRVeGAr6ammwJ5boK

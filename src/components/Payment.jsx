@@ -6,7 +6,7 @@ import PaymentGatewaySection from "./PaymentGatewaySection";
 
 const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, email, phone, isPaid, handleRazorpayDisplay}) => {
 
-  const {price: programPrice, strikeThroughPrice: programStrikeThroughPrice, title: programTitle} = programInfo;
+  const {strikeThroughPrice: programStrikeThroughPrice, title: programTitle} = programInfo;
 
   const selectedAddons = addons.filter((addon) =>
     selectedAddonIds.includes(addon.id)
@@ -123,6 +123,7 @@ const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, em
       />
       <PaymentGatewaySection 
         handleRazorpayDisplay={handleRazorpayDisplay}
+        totalPayable={totalPayable}
       />
     </div>
   );

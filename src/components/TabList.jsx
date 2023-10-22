@@ -12,7 +12,7 @@ const TabList = (props) => {
                     onClick={() => setActiveTab(true)}
                 >
                     <div className="text-block-18">
-                        <strong className="bold-text-4">Please provide your details </strong>
+                        <strong className="bold-text-4">Provide your details to register </strong>
                         <br />
                         <span className="text-span-7">You're almost there!</span>
                     </div>

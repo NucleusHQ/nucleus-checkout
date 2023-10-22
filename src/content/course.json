@@ -1,3 +1,39 @@
 {
-    
+    "101": {
+        "paid": {
+            "headerTitle": "You're one step closer from becoming a JavaScript Ninja!", 
+            "formTitle": "Attend the program for a special price of Rs 9999 only", 
+            "primaryBtnContent": {
+                "line1": "For Special Offers Click Here", 
+                "line2": "Yes! I want This Offer!"
+            }, 
+            "programInfo": {
+                "title": "JS Mastery", 
+                "promoPrice": "9999", 
+                "strikeThroughPrice": "18699"
+            }, 
+            "addons": [
+                {
+                    "id": "addon-1",
+                    "title": "LinkedIn Workshop Recordings ( Lifetime Access + Updates )", 
+                    "promoPrice": "499.00",
+                    "strikeThroughPrice": "1999.00",
+                    "line1": "Get Lifetime Access to recordings & Lifetime Updates for ₹499/-",
+                    "line2": "Stay up-to-date with the ever-evolving LinkedIn platform and gain lifetime access to my content updates and recordings! Get all of this for just ₹499/-",
+                    "line3": "PS: I have updated the content 3 times in the last 1 year.",
+                    "line4": "‍(You should definitely opt-in for this if you're unsure about being available during the workshop timings!)"
+                }, 
+                {
+                    "id": "addon-2",
+                    "title": "LinkedIn Workshop Recordings ( Lifetime Access + Updates )", 
+                    "promoPrice": "1999.00",
+                    "strikeThroughPrice": "9999.00",
+                    "line1": "Get Lifetime Access to recordings & Lifetime Updates for ₹499/-",
+                    "line2": "Stay up-to-date with the ever-evolving LinkedIn platform and gain lifetime access to my content updates and recordings! Get all of this for just ₹499/-",
+                    "line3": "PS: I have updated the content 3 times in the last 1 year.",
+                    "line4": "‍(You should definitely opt-in for this if you're unsure about being available during the workshop timings!)"
+                }
+            ]
+        }
+    }
 }
