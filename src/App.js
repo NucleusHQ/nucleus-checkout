@@ -42,7 +42,7 @@ function AppContainer() {
   const { addons, formTitle, headerTitle, primaryBtnContent, programInfo } = relevantData || {};
   const {title: programtitle} = programInfo || {};
 
-  // -----------------------------
+  // ----------------------------- //
 
   async function handleRazorpayDisplay(totalPayable) {
 
@@ -94,6 +94,8 @@ function AppContainer() {
       />
       <CheckoutForm
         addons={addons}
+        type={type}
+        programId={programId}
         formTitle={formTitle}
         primaryBtnContent={primaryBtnContent}
         programInfo={programInfo}

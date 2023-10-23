@@ -2,12 +2,14 @@ import { useState } from "react";
 import PaymentTabContent from "./Payment";
 import UserDetailsTabContent from "./UserDetails";
 import TabList from "./TabList";
+import { getCurrentFormattedDate, sendPostRequest } from "../utils";
+import config from "../config";
 
 
 const CheckoutForm = (props) => {
 
   const {addons, formTitle, primaryBtnContent, programInfo, isPaid, handleRazorpayDisplay,
-    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone
+    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, type, programId
   } = props;
 
 
@@ -116,8 +118,27 @@ const CheckoutForm = (props) => {
     });
 
     if (isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid) {
-        //api call to register activity 
-        setActiveTab("2");
+
+      const contactCreationBody = {
+        fullName: firstName + " " + lastName, 
+        phone: "91" + phone, 
+        email: email, 
+        source: "webinar"
+      }
+
+      const activityBody = {
+        phone: "91" + phone,
+        type: "abandoned",
+        time: getCurrentFormattedDate(), 
+        source: {
+          id: programId,
+          type: type == "tofu" ? "tofu" : "course"
+        }
+      }
+
+      setActiveTab("2");
+      sendPostRequest(config.contactCreate, contactCreationBody);
+      sendPostRequest(config.activityRegister, activityBody)
     }
   };
 

@@ -79,6 +79,17 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo) {
       };
 
       sendPostRequest(config.registerPayment, paymentBody);
+
+
+      //IF SUCCESSFUL, DELETE UNNECESSARY ACTIVITY
+
+      const activityDeleteParams = {
+        phone: userInfo.phone, 
+        sourceId: programId, 
+        sourceType: type
+      }
+
+      sendDeleteRequest(config.deleteActivity, activityDeleteParams)
     },
     prefill: {
       name: userInfo.fullName,
@@ -97,7 +108,7 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo) {
 }
 
 // Helper function to send a POST request
-async function sendPostRequest(url, body) {
+export async function sendPostRequest(url, body) {
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -117,8 +128,37 @@ async function sendPostRequest(url, body) {
   }
 }
 
+
+export async function sendDeleteRequest(url, queryParams) {
+  try {
+    // Construct the URL with query parameters
+    const urlWithParams = new URL(url);
+    if (queryParams) {
+      Object.keys(queryParams).forEach((key) => {
+        urlWithParams.searchParams.append(key, queryParams[key]);
+      });
+    }
+
+    const response = await fetch(urlWithParams, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      console.log('Request succeeded:', response.status);
+    } else {
+      console.error('Request failed:', response.status);
+    }
+  } catch (error) {
+    console.error('Request error:', error);
+  }
+}
+
+
 // Helper function to get the current date in the "YYYY-MM-DD HH:MM:SS" format
-function getCurrentFormattedDate() {
+export function getCurrentFormattedDate() {
   const currentDate = new Date();
   return currentDate.toISOString().slice(0, 19).replace('T', ' ');
 }
