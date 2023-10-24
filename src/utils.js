@@ -53,9 +53,10 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
     order_id: rzOrderResponse.id,
     handler: async function (response) {
 
+      const {fullName, phone, email} = userInfo || {};
+
         //CONTACT CREATION/UPDATION
-      const body = { ...userInfo, source: 'webinar' };
-      await sendPostRequest(config.contactCreate, body);
+      const contactBody = { ...userInfo, source: 'webinar' };
 
 
         //PAYMENT CREATION
@@ -78,8 +79,6 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
         },
       };
 
-      sendPostRequest(config.registerPayment, paymentBody);
-
 
       //IF SUCCESSFUL, DELETE UNNECESSARY ACTIVITY
 
@@ -89,7 +88,15 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
         sourceType: type
       }
 
-      sendDeleteRequest(config.deleteActivity, activityDeleteParams)
+      const emailConfirmationBody = {
+        fullName: fullName, 
+        email: email
+      }
+
+      await sendPostRequest(config.contactCreate, contactBody);
+      await sendPostRequest(config.registerPayment, paymentBody);
+      await sendDeleteRequest(config.deleteActivity, activityDeleteParams);
+      await sendPostRequest(config.emailConfirmation(type), emailConfirmationBody);
 
       setShowConfirmation(true);
     },
@@ -125,6 +132,8 @@ export async function sendPostRequest(url, body) {
     } else {
       console.error('Request failed:', response.status);
     }
+
+    return response;
   } catch (error) {
     console.error('Request error:', error);
   }

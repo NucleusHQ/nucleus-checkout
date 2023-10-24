@@ -101,7 +101,7 @@ const CheckoutForm = (props) => {
     return value.trim() !== "";
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     
     e.preventDefault();
     // Validate all fields on form submission
@@ -139,10 +139,16 @@ const CheckoutForm = (props) => {
         }
       }
 
+      const emailConfirmationBody = {
+        fullName: firstName + " " + lastName, 
+        email: email
+      }
+
       isPaid && setActiveTab("2");
-      sendPostRequest(config.contactCreate, contactCreationBody);
+      await sendPostRequest(config.contactCreate, contactCreationBody);
       !isPaid && setShowConfirmation(true);
-      isPaid && sendPostRequest(config.activityRegister, activityBody);
+      isPaid && await sendPostRequest(config.activityRegister, activityBody);
+      !isPaid && await sendPostRequest(config.emailConfirmation(type), emailConfirmationBody);
     }
   };
 

@@ -5,7 +5,8 @@ const config = {
     registerPayment: `${host}/payments`, 
     contactCreate: `${host}/contacts`, 
     activityRegister: `${host}/activity`, 
-    deleteActivity: `${host}/activity`
+    deleteActivity: `${host}/activity`, 
+    emailConfirmation: (type, id) => `${host}/confirmation/${type}`
 };
 
 
