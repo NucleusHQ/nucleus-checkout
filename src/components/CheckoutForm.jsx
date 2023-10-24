@@ -9,7 +9,7 @@ import config from "../config";
 const CheckoutForm = (props) => {
 
   const {addons, formTitle, primaryBtnContent, programInfo, isPaid, handleRazorpayDisplay,
-    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, type, programId
+    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, type, programId, setShowConfirmation
   } = props;
 
 
@@ -102,6 +102,7 @@ const CheckoutForm = (props) => {
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
     // Validate all fields on form submission
     const isFirstNameValid = validateInput("firstName", firstName);
@@ -123,7 +124,9 @@ const CheckoutForm = (props) => {
         fullName: firstName + " " + lastName, 
         phone: "91" + phone, 
         email: email, 
-        source: "webinar"
+        source: "webinar", 
+        tofuId: type == "tofu" && programId, 
+        batchId: type == "course" && programId
       }
 
       const activityBody = {
@@ -136,9 +139,10 @@ const CheckoutForm = (props) => {
         }
       }
 
-      setActiveTab("2");
+      isPaid && setActiveTab("2");
       sendPostRequest(config.contactCreate, contactCreationBody);
-      sendPostRequest(config.activityRegister, activityBody)
+      !isPaid && setShowConfirmation(true);
+      isPaid && sendPostRequest(config.activityRegister, activityBody);
     }
   };
 
@@ -197,6 +201,7 @@ const CheckoutForm = (props) => {
                   email={email}
                   phone={phone}
                   handleRazorpayDisplay={handleRazorpayDisplay}
+                  setActiveTab={setActiveTab}
                   />
               )}
             </div>

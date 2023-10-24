@@ -40,6 +40,9 @@
             "formTitle": "Attend Building a Chat App workshop for FREE", 
             "primaryBtnContent": {
                 "line1": "Reserve my seat for FREE"
+            }, 
+            "programInfo": {
+                "title": "Building a Jaw-Dropping Chat App"
             }
         }
     }

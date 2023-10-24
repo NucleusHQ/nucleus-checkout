@@ -4,9 +4,9 @@ import InstructionsSection from "./Instructions";
 import ItemLabel from "./ItemLabel";
 import PaymentGatewaySection from "./PaymentGatewaySection";
 
-const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, email, phone, isPaid, handleRazorpayDisplay}) => {
+const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, email, phone, isPaid, handleRazorpayDisplay, setActiveTab}) => {
 
-  const {strikeThroughPrice: programStrikeThroughPrice, title: programTitle} = programInfo;
+  const {strikeThroughPrice: programStrikeThroughPrice, title: programTitle} = programInfo || {};
 
   const selectedAddons = addons.filter((addon) =>
     selectedAddonIds.includes(addon.id)
@@ -120,6 +120,7 @@ const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, em
       <InstructionsSection 
         email={email}
         phone={phone}
+        setActiveTab={setActiveTab}
       />
       <PaymentGatewaySection 
         handleRazorpayDisplay={handleRazorpayDisplay}

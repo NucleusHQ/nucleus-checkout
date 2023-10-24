@@ -12,6 +12,8 @@ import course from "./content/course.json";
 import { getRazorPayOptions, loadRazorPay } from './utils.js';
 import { razorpayLoadLink } from './constants.js';
 import config from './config.js';
+import ConfirmationPage from './components/ConfirmationPage/ConfirmationPage.jsx';
+import PageNotFound from './components/PageNotFound/PageNotFound.jsx';
 
 
 function AppContainer() {
@@ -20,6 +22,7 @@ function AppContainer() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
   
   const location = useLocation();
 
@@ -36,7 +39,7 @@ function AppContainer() {
   } else if (type === 'course') {
     relevantData = course[programId][isPaid ? 'paid' : 'free'];
   } else {
-    return <div>Invalid file</div>
+    return <PageNotFound />
   }
 
   const { addons, formTitle, headerTitle, primaryBtnContent, programInfo } = relevantData || {};
@@ -80,12 +83,16 @@ function AppContainer() {
     programtitle
   }
 
-  const options = getRazorPayOptions(rzOrderResponse, userInfo, programInfo);
+  const options = getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setShowConfirmation);
 
   const paymentObject = new window.Razorpay(options);  
   paymentObject.open();
 
 }
+
+  if(showConfirmation) {
+     return <ConfirmationPage title={programtitle} />
+  }
 
   return (
     <div className="body">
@@ -109,6 +116,7 @@ function AppContainer() {
         setEmail={setEmail}
         phone={phone}
         setPhone={setPhone}
+        setShowConfirmation={setShowConfirmation}
       />
       <Footer />
     </div>

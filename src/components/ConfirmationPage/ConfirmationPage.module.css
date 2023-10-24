@@ -1,0 +1,32 @@
+/* ConfirmationPage.module.css */
+.confirmationContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .congratulations {
+    font-size: 28px;
+    color: #4a90e2; /* A modern blue color */
+    margin-bottom: 10px;
+  }
+  
+  .title {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333; /* Dark gray text color */
+  }
+  
+  .contactLink {
+    color: #4a90e2; /* Blue link color */
+    text-decoration: none;
+  }
+  
+  .contactLink:hover {
+    text-decoration: underline;
+  }
+  

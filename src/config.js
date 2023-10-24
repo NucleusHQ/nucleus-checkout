@@ -1,4 +1,4 @@
-const host = "http://localhost:3000/api";
+const host = "http://localhost:8001/api";
 
 const config = {
     razorpay: `${host}/razorpay`,

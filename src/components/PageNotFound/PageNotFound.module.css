@@ -1,0 +1,27 @@
+/* PageNotFound.module.css */
+.notFoundContainer {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .notFoundHeader {
+    font-size: 36px;
+    color: #ff0000; /* Red color for error messages */
+  }
+  
+  .notFoundMessage {
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .homeLink {
+    color: #007bff; /* Blue link color */
+    text-decoration: none;
+  }
+  
+  .homeLink:hover {
+    text-decoration: underline;
+  }
+  

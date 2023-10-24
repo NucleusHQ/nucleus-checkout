@@ -1,6 +1,10 @@
 const InstructionsSection = (props) => {
 
-    const {email, phone} = props;
+    const {email, phone, setActiveTab} = props;
+
+    const handleTabSwitch = () => {
+        setActiveTab("1");
+    }
     
     return (
         <section className="section-14">
@@ -25,7 +29,7 @@ const InstructionsSection = (props) => {
                         <p className="paragraph">
                             {"We will send you WhatsApp updates on this phone number"}
                         </p>
-                        <h5 style = {{textDecoration: "underline", fontWeight: "500", cursor: "pointer"}}>Change</h5>
+                        <h5 onClick={handleTabSwitch} style = {{textDecoration: "underline", fontWeight: "500", cursor: "pointer"}}>Change</h5>
                     </div>
                 </form>
 
