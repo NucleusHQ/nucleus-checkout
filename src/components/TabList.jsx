@@ -1,9 +1,11 @@
+import { CALLBACK, FREE } from "../constants";
+
 const TabList = (props) => {
 
-    const {activeTab, setActiveTab, handleSubmit, isPaid} = props;
+    const {activeTab, setActiveTab, handleSubmit, type} = props;
     
 
-    if(!isPaid) {
+    if(type === FREE || type === CALLBACK) { //type == FREE || type == CALLBACK
         return (
             <a
                     data-w-tab="Tab 1"

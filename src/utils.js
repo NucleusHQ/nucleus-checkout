@@ -60,7 +60,7 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
 
 
         //PAYMENT CREATION
-      const { programId, type, programtitle } = programInfo || {};
+      const { programId, category, programtitle } = programInfo || {};
       const formattedDate = getCurrentFormattedDate();
 
       const paymentBody = {
@@ -74,7 +74,7 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
         date: formattedDate,
         currency,
         source: {
-          type,
+          category,
           id: programId,
         },
       };
@@ -85,7 +85,7 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
       const activityDeleteParams = {
         phone: userInfo.phone, 
         sourceId: programId, 
-        sourceType: type
+        sourceType: category
       }
 
       const emailConfirmationBody = {
@@ -96,7 +96,7 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
       await sendPostRequest(config.contactCreate, contactBody);
       await sendPostRequest(config.registerPayment, paymentBody);
       await sendDeleteRequest(config.deleteActivity, activityDeleteParams);
-      await sendPostRequest(config.emailConfirmation(type), emailConfirmationBody);
+      await sendPostRequest(config.emailConfirmation(category), emailConfirmationBody);
 
       setShowConfirmation(true);
     },

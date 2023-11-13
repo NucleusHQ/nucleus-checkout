@@ -34,6 +34,16 @@
                     "line4": "‍(You should definitely opt-in for this if you're unsure about being available during the workshop timings!)"
                 }
             ]
+        }, 
+        "callback": {
+            "headerTitle": "You're one step closer from achieving JavaScript Mastery!", 
+            "formTitle": "Register now and take the first step to a high-paying JavaScript career", 
+            "primaryBtnContent": {
+                "line1": "Reserve my seat now"
+            }, 
+            "programInfo": {
+                "title": "Building a Jaw-Dropping Chat App"
+            }
         }
     }
 }

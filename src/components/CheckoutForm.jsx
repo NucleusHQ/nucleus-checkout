@@ -4,12 +4,13 @@ import UserDetailsTabContent from "./UserDetails";
 import TabList from "./TabList";
 import { getCurrentFormattedDate, sendPostRequest } from "../utils";
 import config from "../config";
+import { PAID } from "../constants";
 
 
 const CheckoutForm = (props) => {
 
-  const {addons, formTitle, primaryBtnContent, programInfo, isPaid, handleRazorpayDisplay,
-    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, type, programId, setShowConfirmation
+  const {addons, formTitle, primaryBtnContent, programInfo, handleRazorpayDisplay, type,
+    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, category, programId, setShowConfirmation
   } = props;
 
 
@@ -125,8 +126,8 @@ const CheckoutForm = (props) => {
         phone: "91" + phone, 
         email: email, 
         source: "webinar", 
-        tofuId: type == "tofu" && programId, 
-        batchId: type == "course" && programId
+        tofuId: category == "tofu" && programId, 
+        batchId: category == "course" && programId
       }
 
       const activityBody = {
@@ -135,7 +136,7 @@ const CheckoutForm = (props) => {
         time: getCurrentFormattedDate(), 
         source: {
           id: programId,
-          type: type == "tofu" ? "tofu" : "course"
+          category: category == "tofu" ? "tofu" : "course"
         }
       }
 
@@ -144,11 +145,11 @@ const CheckoutForm = (props) => {
         email: email
       }
 
-      isPaid && setActiveTab("2");
+      type === PAID && setActiveTab("2");
       await sendPostRequest(config.contactCreate, contactCreationBody);
-      !isPaid && setShowConfirmation(true);
-      isPaid && await sendPostRequest(config.activityRegister, activityBody);
-      !isPaid && await sendPostRequest(config.emailConfirmation(type), emailConfirmationBody);
+      type !== PAID && setShowConfirmation(true);
+      type === PAID && await sendPostRequest(config.activityRegister, activityBody);
+      type !== PAID && await sendPostRequest(config.emailConfirmation(category), emailConfirmationBody);
     }
   };
 
@@ -183,7 +184,7 @@ const CheckoutForm = (props) => {
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               handleSubmit={handleSubmit}
-              isPaid={isPaid}
+              type={type}
             />
             <div className="w-tab-content">
               {activeTab == "1" ? (

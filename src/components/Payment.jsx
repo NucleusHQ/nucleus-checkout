@@ -4,7 +4,7 @@ import InstructionsSection from "./Instructions";
 import ItemLabel from "./ItemLabel";
 import PaymentGatewaySection from "./PaymentGatewaySection";
 
-const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, email, phone, isPaid, handleRazorpayDisplay, setActiveTab}) => {
+const Payment = ({addons, selectedAddonIds, setSelectedAddonIds, programInfo, email, phone, handleRazorpayDisplay, setActiveTab}) => {
 
   const {strikeThroughPrice: programStrikeThroughPrice, title: programTitle} = programInfo || {};
 

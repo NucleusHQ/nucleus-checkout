@@ -27,17 +27,17 @@ function AppContainer() {
   const location = useLocation();
 
   const query = new URLSearchParams(location.search);
-  const type = query.get('type');
+  const category = query.get('category');
   const programId = query.get('programId');
-  const isPaid = query.get('isPaid') == "true" ? true : false;
+  const type = query.get('type');
 
   let relevantData;
   
-  if (type === 'tofu') {
+  if (category === 'tofu') {
 
-    relevantData = tofu[programId][isPaid ? 'paid' : 'free'];
-  } else if (type === 'course') {
-    relevantData = course[programId][isPaid ? 'paid' : 'free'];
+    relevantData = tofu[programId][type];
+  } else if (category === 'course') {
+    relevantData = course[programId][type];
   } else {
     return <PageNotFound />
   }
@@ -74,12 +74,12 @@ function AppContainer() {
     fullName: firstName + " " + lastName, 
     phone: "91" + phone, 
     email: email, 
-    tofuId: type == "tofu" && programId
+    tofuId: category == "tofu" && programId
   }
 
   const programInfo = {
     programId, 
-    type, 
+    category, 
     programtitle
   }
 
@@ -87,7 +87,6 @@ function AppContainer() {
 
   const paymentObject = new window.Razorpay(options);  
   paymentObject.open();
-
 }
 
   if(showConfirmation) {
@@ -101,12 +100,12 @@ function AppContainer() {
       />
       <CheckoutForm
         addons={addons}
-        type={type}
+        category={category}
         programId={programId}
         formTitle={formTitle}
         primaryBtnContent={primaryBtnContent}
         programInfo={programInfo}
-        isPaid={isPaid}
+        type={type}
         handleRazorpayDisplay={handleRazorpayDisplay}
         firstName={firstName}
         setFirstName={setFirstName}
