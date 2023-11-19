@@ -6,10 +6,10 @@ const config = {
     contactCreate: `${host}/contacts`, 
     activityRegister: `${host}/activity`, 
     deleteActivity: `${host}/activity`, 
-    emailConfirmation: (category, id) => `${host}/confirmation/${category}`, 
+    emailConfirmation: (category, id, type) => `${host}/confirmation/email/${category}/${id}/${type}`, 
     whatsAppConfirmation: (category) => `${host}/whatsapp/${category}`
 };
 
 
-  
+
 export default config;

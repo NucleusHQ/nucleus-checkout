@@ -192,8 +192,8 @@ const CheckoutForm = (props) => {
       await sendPostRequest(config.contactCreate, contactCreationBody);
       await sendPostRequest(config.activityRegister, activityBody);
       await sendPostRequest(config.whatsAppConfirmation(category), whatsAppConfirmationBody);
+      await sendPostRequest(config.emailConfirmation(category, programId, type), emailConfirmationBody); 
 
-      // type !== PAID && await sendPostRequest(config.emailConfirmation(category), emailConfirmationBody); 
       setShowConfirmation(true);
       handleCleanup();
     }

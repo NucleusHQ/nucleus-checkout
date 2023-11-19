@@ -12,7 +12,7 @@
                 "line2": "Yes! I want This Offer!"
             }, 
             "programInfo": {
-                "title": "JS Mastery", 
+                "title": "JavaScript Mastery <> Nucleus", 
                 "promoPrice": "9999", 
                 "strikeThroughPrice": "18699"
             }, 
@@ -50,7 +50,9 @@
                 "teamName": "Team Nucleus"
             },
             "programInfo": {
-                "title": "Building a Jaw-Dropping Chat App"
+                "title": "JavaScript Mastery <> Nucleus", 
+                "promoPrice": "9999", 
+                "strikeThroughPrice": "18699"            
             }
         }
     }
