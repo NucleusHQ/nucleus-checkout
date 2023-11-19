@@ -6,7 +6,8 @@ const config = {
     contactCreate: `${host}/contacts`, 
     activityRegister: `${host}/activity`, 
     deleteActivity: `${host}/activity`, 
-    emailConfirmation: (category, id) => `${host}/confirmation/${category}`
+    emailConfirmation: (category, id) => `${host}/confirmation/${category}`, 
+    whatsAppConfirmation: (category) => `${host}/whatsapp/${category}`
 };
 
 

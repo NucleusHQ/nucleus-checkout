@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaymentTabContent from "./Payment";
 import UserDetailsTabContent from "./UserDetails";
 import TabList from "./TabList";
 import { getCurrentFormattedDate, sendPostRequest } from "../utils";
 import config from "../config";
-import { PAID } from "../constants";
+import { CALLBACK, COURSE, PAID, TOFU } from "../constants";
 
 
 const CheckoutForm = (props) => {
 
-  const {addons, formTitle, primaryBtnContent, programInfo, handleRazorpayDisplay, type,
-    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, category, programId, setShowConfirmation
+  const { addons, formTitle, primaryBtnContent, programInfo, handleRazorpayDisplay, type,
+    firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, category, programId,
+    setShowConfirmation, handleCleanup, whatsappInfo, tofuType, date, time
   } = props;
 
+  const { templateName, teamName } = whatsappInfo || {};
+
+
+  const { title: programtitle } = programInfo || {};
+
+
+  useEffect(() => {
+    window.fbq('track', 'ViewContent', {
+      content_name: programtitle + " " + 'Checkout Page',
+      content_category: category,
+      content_ids: [programId],
+    });
+  }, [])
 
   const [activeTab, setActiveTab] = useState(true);
   const [error, setError] = useState(true);
@@ -27,7 +41,7 @@ const CheckoutForm = (props) => {
   });
 
   const handleChange = (e) => {
-    
+
     const { name, value } = e.target;
 
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
@@ -103,7 +117,7 @@ const CheckoutForm = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    
+
     e.preventDefault();
     // Validate all fields on form submission
     const isFirstNameValid = validateInput("firstName", firstName);
@@ -122,18 +136,19 @@ const CheckoutForm = (props) => {
     if (isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid) {
 
       const contactCreationBody = {
-        fullName: firstName + " " + lastName, 
-        phone: "91" + phone, 
-        email: email, 
-        source: "webinar", 
-        tofuId: category == "tofu" && programId, 
-        batchId: category == "course" && programId
+        fullName: firstName + " " + lastName,
+        phone: "91" + phone,
+        email: email,
+        tofuId: category == "tofu" && programId,
+        batchId: category == "course" && type == PAID && programId
       }
+
+      const activityType = category == "tofu" ? "registration" : "callback"
 
       const activityBody = {
         phone: "91" + phone,
-        type: "abandoned",
-        time: getCurrentFormattedDate(), 
+        type: activityType,
+        time: getCurrentFormattedDate(),
         source: {
           id: programId,
           category: category == "tofu" ? "tofu" : "course"
@@ -141,15 +156,46 @@ const CheckoutForm = (props) => {
       }
 
       const emailConfirmationBody = {
-        fullName: firstName + " " + lastName, 
+        fullName: firstName + " " + lastName,
         email: email
       }
 
+      //WhatsApp Body
+
+      let whatsAppConfirmationBody;
+
+      if (category == TOFU) {
+        whatsAppConfirmationBody = {
+          fullName: firstName + " " + lastName,
+          phone: "91" + phone,
+          tofuType,
+          eventName: programInfo?.title,
+          date,
+          time,
+          teamName,
+          templateName
+        }
+      } else if (category == COURSE) {
+        whatsAppConfirmationBody = {
+          fullName: firstName + " " + lastName,
+          phone: "91" + phone,
+          templateName,
+          teamName
+        }
+      } else {
+
+      }
+
+      //if JS Mastery, callback API should get triggered
+
       type === PAID && setActiveTab("2");
       await sendPostRequest(config.contactCreate, contactCreationBody);
-      type !== PAID && setShowConfirmation(true);
-      type === PAID && await sendPostRequest(config.activityRegister, activityBody);
-      type !== PAID && await sendPostRequest(config.emailConfirmation(category), emailConfirmationBody);
+      await sendPostRequest(config.activityRegister, activityBody);
+      await sendPostRequest(config.whatsAppConfirmation(category), whatsAppConfirmationBody);
+
+      // type !== PAID && await sendPostRequest(config.emailConfirmation(category), emailConfirmationBody); 
+      setShowConfirmation(true);
+      handleCleanup();
     }
   };
 
@@ -180,7 +226,7 @@ const CheckoutForm = (props) => {
             data-duration-out="100"
             className="tabs w-tabs"
           >
-            <TabList 
+            <TabList
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               handleSubmit={handleSubmit}
@@ -188,28 +234,28 @@ const CheckoutForm = (props) => {
             />
             <div className="w-tab-content">
               {activeTab == "1" ? (
-                <UserDetailsTabContent 
-                  error={error} 
-                  handleChange={handleChange} 
+                <UserDetailsTabContent
+                  error={error}
+                  handleChange={handleChange}
                   handleSubmit={handleSubmit}
-                  firstName={firstName} 
+                  firstName={firstName}
                   lastName={lastName}
-                  errors={errors} 
+                  errors={errors}
                   phone={phone}
                   email={email}
                   primaryBtnContent={primaryBtnContent}
                 />
               ) : (
-                <PaymentTabContent 
-                  addons = {addons} 
-                  selectedAddonIds = {selectedAddonIds} 
-                  setSelectedAddonIds = {setSelectedAddonIds} 
+                <PaymentTabContent
+                  addons={addons}
+                  selectedAddonIds={selectedAddonIds}
+                  setSelectedAddonIds={setSelectedAddonIds}
                   programInfo={programInfo}
                   email={email}
                   phone={phone}
                   handleRazorpayDisplay={handleRazorpayDisplay}
                   setActiveTab={setActiveTab}
-                  />
+                />
               )}
             </div>
           </div>

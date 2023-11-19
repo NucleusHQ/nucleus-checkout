@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './ConfirmationPage.module.css';
 
-const ConfirmationPage = ({ title }) => {
+const ConfirmationPage = ({ title, category, programId }) => {
+
+
+  useEffect(() => {
+    window.fbq('track', 'CompleteRegistration', {
+      content_name: title + " " + 'Registration Confirmation'
+    });
+
+  }, [])
+
   return (
     <div className={styles.confirmationContainer}>
       <h1 className={styles.congratulations}>Congratulations!</h1>

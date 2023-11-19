@@ -3,6 +3,10 @@
         "paid": {
             "headerTitle": "You're one step closer from becoming a JavaScript Ninja!", 
             "formTitle": "Attend the program for a special price of Rs 9999 only", 
+            "whatsappInfo": {
+                "templateName": "js_mastery_callback_message", 
+                "teamName": "Team Nucleus"
+            },
             "primaryBtnContent": {
                 "line1": "For Special Offers Click Here", 
                 "line2": "Yes! I want This Offer!"
@@ -41,6 +45,10 @@
             "primaryBtnContent": {
                 "line1": "Reserve my seat now"
             }, 
+            "whatsappInfo": {
+                "templateName": "js_mastery_callback_message", 
+                "teamName": "Team Nucleus"
+            },
             "programInfo": {
                 "title": "Building a Jaw-Dropping Chat App"
             }

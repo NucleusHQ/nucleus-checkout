@@ -23,7 +23,7 @@ function AppContainer() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
-  
+
   const location = useLocation();
 
   const query = new URLSearchParams(location.search);
@@ -32,7 +32,7 @@ function AppContainer() {
   const type = query.get('type');
 
   let relevantData;
-  
+
   if (category === 'tofu') {
 
     relevantData = tofu[programId][type];
@@ -42,57 +42,69 @@ function AppContainer() {
     return <PageNotFound />
   }
 
-  const { addons, formTitle, headerTitle, primaryBtnContent, programInfo } = relevantData || {};
-  const {title: programtitle} = programInfo || {};
+  const { addons, formTitle, headerTitle, primaryBtnContent, programInfo, whatsappInfo, 
+    tofuType, date, time } = relevantData || {};
+  const { title: programtitle } = programInfo || {};
 
-  // ----------------------------- //
+
+  const handleCleanup = () => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+  }
+
 
   async function handleRazorpayDisplay(totalPayable) {
 
     const res = await loadRazorPay(razorpayLoadLink);
 
-    if(!res) {
+    if (!res) {
       alert("Razorpay SDK failed to load. Please try again later")
       return
     }
 
     const rzOrderResponse = await fetch(config.razorpay, {
-      method: "POST", 
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         amount: totalPayable
-      }), 
+      }),
     })
-    .then(res => res.json())
-    .catch(err => {
-      console.error(err);
-    })
+      .then(res => res.json())
+      .catch(err => {
+        console.error(err);
+      })
 
-  const userInfo = {
-    fullName: firstName + " " + lastName, 
-    phone: "91" + phone, 
-    email: email, 
-    tofuId: category == "tofu" && programId
+    const userInfo = {
+      fullName: firstName + " " + lastName,
+      phone: "91" + phone,
+      email: email,
+      tofuId: category == "tofu" && programId
+    }
+
+    const programInfo = {
+      programId,
+      category,
+      programtitle
+    }
+
+    const options = getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setShowConfirmation);
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
   }
 
-  const programInfo = {
-    programId, 
-    category, 
-    programtitle
+  if (showConfirmation) {
+    return <ConfirmationPage 
+      title={programtitle}
+      category={category}
+      programId={programId}
+      />
   }
-
-  const options = getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setShowConfirmation);
-
-  const paymentObject = new window.Razorpay(options);  
-  paymentObject.open();
-}
-
-  if(showConfirmation) {
-     return <ConfirmationPage title={programtitle} />
-  }
-
+  
   return (
     <div className="body">
       <Header
@@ -100,6 +112,10 @@ function AppContainer() {
       />
       <CheckoutForm
         addons={addons}
+        tofuType={tofuType}
+        date={date}
+        time={time}
+        whatsappInfo={whatsappInfo}
         category={category}
         programId={programId}
         formTitle={formTitle}
@@ -116,6 +132,7 @@ function AppContainer() {
         phone={phone}
         setPhone={setPhone}
         setShowConfirmation={setShowConfirmation}
+        handleCleanup={handleCleanup}
       />
       <Footer />
     </div>
