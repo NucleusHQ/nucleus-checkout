@@ -188,6 +188,11 @@ const CheckoutForm = (props) => {
 
       //if JS Mastery, callback API should get triggered
 
+      if(type === PAID) {
+        setActiveTab("2");
+        return
+      }
+
       type === PAID && setActiveTab("2");
       await sendPostRequest(config.contactCreate, contactCreationBody);
       await sendPostRequest(config.activityRegister, activityBody);
