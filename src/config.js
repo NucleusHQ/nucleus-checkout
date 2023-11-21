@@ -1,4 +1,4 @@
-const host = "http://localhost:8001/api";
+const host = "https://floating-plains-19404-3ba9055b7fae.herokuapp.com/api";
 
 const config = {
     razorpay: `${host}/razorpay`,
