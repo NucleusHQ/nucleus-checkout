@@ -11,7 +11,7 @@ const CheckoutForm = (props) => {
 
   const { addons, formTitle, primaryBtnContent, programInfo, handleRazorpayDisplay, type,
     firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, category, programId,
-    setShowConfirmation, handleCleanup, whatsappInfo, tofuType, date, time
+    setShowConfirmation, handleCleanup, whatsappInfo, tofuType, date, time, emailInfo
   } = props;
 
   const { templateName, teamName } = whatsappInfo || {};
@@ -157,10 +157,9 @@ const CheckoutForm = (props) => {
 
       const emailConfirmationBody = {
         fullName: firstName + " " + lastName,
-        email: email
+        email: email, 
+        templateId: emailInfo?.templateId
       }
-
-      //WhatsApp Body
 
       let whatsAppConfirmationBody;
 

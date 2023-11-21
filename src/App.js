@@ -43,7 +43,7 @@ function AppContainer() {
   }
 
   const { addons, formTitle, headerTitle, primaryBtnContent, programInfo, whatsappInfo, 
-    tofuType, date, time } = relevantData || {};
+    tofuType, date, time, emailInfo } = relevantData || {};
   const { title: programtitle } = programInfo || {};
 
 
@@ -115,6 +115,7 @@ function AppContainer() {
         tofuType={tofuType}
         date={date}
         time={time}
+        emailInfo={emailInfo}
         whatsappInfo={whatsappInfo}
         category={category}
         programId={programId}

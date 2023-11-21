@@ -49,6 +49,9 @@
                 "templateName": "js_mastery_callback_message", 
                 "teamName": "Team Nucleus"
             },
+            "emailInfo": {
+                "templateId": "10"
+            },
             "programInfo": {
                 "title": "JavaScript Mastery <> Nucleus", 
                 "promoPrice": "9999", 
