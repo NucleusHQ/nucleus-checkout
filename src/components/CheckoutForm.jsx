@@ -11,8 +11,8 @@ const CheckoutForm = (props) => {
 
   const { addons, formTitle, primaryBtnContent, programInfo, handleRazorpayDisplay, type,
     firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, category, programId,
-    setShowConfirmation, handleCleanup, whatsappInfo, tofuType, date, time, emailInfo
-  } = props;
+    setShowConfirmation, handleCleanup, whatsappInfo, tofuType, date, time, emailInfo, isLoading, setIsLoading, 
+    showSuccessMessage, showErrorMessage, showLoadingIndicator, messageApi } = props;
 
   const { templateName, teamName } = whatsappInfo || {};
 
@@ -193,13 +193,42 @@ const CheckoutForm = (props) => {
       }
 
       type === PAID && setActiveTab("2");
-      await sendPostRequest(config.contactCreate, contactCreationBody);
-      await sendPostRequest(config.activityRegister, activityBody);
-      await sendPostRequest(config.whatsAppConfirmation(category), whatsAppConfirmationBody);
-      await sendPostRequest(config.emailConfirmation(category, programId, type), emailConfirmationBody); 
 
-      setShowConfirmation(true);
-      handleCleanup();
+      setIsLoading(true);
+      showLoadingIndicator();
+
+      try {
+        const apiCallPromises = [
+          sendPostRequest(config.contactCreate, contactCreationBody),
+          sendPostRequest(config.activityRegister, activityBody),
+          sendPostRequest(config.whatsAppConfirmation(category), whatsAppConfirmationBody),
+          sendPostRequest(config.emailConfirmation(category, programId, type), emailConfirmationBody),
+        ];
+
+        await Promise.all(apiCallPromises);
+
+        setIsLoading(false);
+        showSuccessMessage();
+        setShowConfirmation(true);
+
+        setTimeout(() => {
+          messageApi.destroy();
+        }, 2000);
+
+        handleCleanup();
+
+      } catch (error) {
+
+        setIsLoading(false);
+        messageApi.destroy();
+        showErrorMessage();
+
+        setTimeout(() => {
+          messageApi.destroy();
+        }, 2000);
+
+        console.error("Error in API calls:", error);
+      }
     }
   };
 
@@ -240,6 +269,7 @@ const CheckoutForm = (props) => {
               {activeTab == "1" ? (
                 <UserDetailsTabContent
                   error={error}
+                  isLoading={isLoading}
                   handleChange={handleChange}
                   handleSubmit={handleSubmit}
                   firstName={firstName}
@@ -252,6 +282,7 @@ const CheckoutForm = (props) => {
               ) : (
                 <PaymentTabContent
                   addons={addons}
+                  isLoading={isLoading}
                   selectedAddonIds={selectedAddonIds}
                   setSelectedAddonIds={setSelectedAddonIds}
                   programInfo={programInfo}

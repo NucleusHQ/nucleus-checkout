@@ -136,6 +136,7 @@ export async function sendPostRequest(url, body) {
     return response;
   } catch (error) {
     console.error('Request error:', error);
+    throw error; 
   }
 }
 

@@ -3,7 +3,7 @@ import InputError from "./InputError";
 
 const UserDetails = (props) => {
 
-  const {handleChange, handleSubmit, firstName, lastName, email, errors, phone, primaryBtnContent} = props;
+  const {handleChange, handleSubmit, firstName, lastName, email, errors, phone, primaryBtnContent, isLoading} = props;
 
   return (
     <div data-w-tab="Tab 1" className="w-tab-pane">
@@ -103,13 +103,14 @@ const UserDetails = (props) => {
               <option value="">India</option>
             </select>
             <button
+              disabled={isLoading}
               type="submit"
               id="Details"
               data-wait="Please wait..."
               className="submit-button-3 w-button"
             >
               ⇨ {primaryBtnContent.line1} <br />{" "}
-              <span>{primaryBtnContent.line2}</span>
+              <span>{primaryBtnContent.line2}</span> 
             </button>
           </form>
           <div className="w-form-done">

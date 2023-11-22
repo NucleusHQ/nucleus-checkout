@@ -14,6 +14,8 @@ import { razorpayLoadLink } from './constants.js';
 import config from './config.js';
 import ConfirmationPage from './components/ConfirmationPage/ConfirmationPage.jsx';
 import PageNotFound from './components/PageNotFound/PageNotFound.jsx';
+import { message } from 'antd';
+
 
 
 function AppContainer() {
@@ -23,6 +25,31 @@ function AppContainer() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const showLoadingIndicator = () => {
+    messageApi.open({
+      type: 'loading',
+      content: 'Action in progress..',
+      duration: 0,
+    });
+  };
+
+  const showSuccessMessage = () => {
+
+    messageApi.open({
+      type: 'success',
+      content: 'This is a success message',
+    });
+  };
+
+  const showErrorMessage = () => {
+    messageApi.open({
+      type: 'error',
+      content: 'Request failed. Please try again',
+    });
+  };
 
   const location = useLocation();
 
@@ -107,10 +134,17 @@ function AppContainer() {
   
   return (
     <div className="body">
+      {contextHolder}
       <Header
         headerTitle={headerTitle}
       />
       <CheckoutForm
+        isLoading={isLoading}
+        messageApi={messageApi}
+        showSuccessMessage={showSuccessMessage}
+        showErrorMessage={showErrorMessage}
+        showLoadingIndicator={showLoadingIndicator}
+        setIsLoading={setIsLoading}
         addons={addons}
         tofuType={tofuType}
         date={date}
