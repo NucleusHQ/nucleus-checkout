@@ -49,7 +49,10 @@
             "whatsappInfo": {
                 "templateName": "tofu_registration_confirmation", 
                 "teamName": "Team Nucleus"
-            },            
+            },      
+            "emailInfo": {
+                "templateId": "7"
+            },      
             "headerTitle": "You're one step closer from building a jaw-dropping Chat App!", 
             "formTitle": "Attend Building a Chat App workshop for FREE", 
             "primaryBtnContent": {
