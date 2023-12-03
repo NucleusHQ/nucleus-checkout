@@ -62,5 +62,27 @@
                 "title": "Building a Jaw-Dropping Chat App"
             }
         }
+    },
+    "102": {
+        "free": {
+            "tofuType": "Webinar",
+            "date": "24th Oct, 2023",
+            "time": "7:00 PM - 8:00 PM",
+            "whatsappInfo": {
+                "templateName": "tofu_registration_confirmation", 
+                "teamName": "Team Nucleus"
+            },      
+            "emailInfo": {
+                "templateId": "7"
+            },      
+            "headerTitle": "You're one step closer to mastering Asynchronous JavaScript", 
+            "formTitle": "Attend Asynchronous JavaScript workshop for FREE", 
+            "primaryBtnContent": {
+                "line1": "Reserve my seat for FREE"
+            }, 
+            "programInfo": {
+                "title": "Understanding Asynchronous JavaScript"
+            }
+        }
     }
 }
