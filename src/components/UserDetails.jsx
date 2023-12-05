@@ -109,8 +109,8 @@ const UserDetails = (props) => {
               data-wait="Please wait..."
               className="submit-button-3 w-button"
             >
-              ⇨ {primaryBtnContent.line1} <br />{" "}
-              <span>{primaryBtnContent.line2}</span> 
+              ⇨ {primaryBtnContent?.line1} <br />{" "}
+              <span>{primaryBtnContent?.line2}</span> 
             </button>
           </form>
           <div className="w-form-done">

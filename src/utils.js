@@ -39,7 +39,7 @@ export function loadRazorPay(src) {
   });
 }
 
-export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setShowConfirmation) {
+export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo) {
   const isDev = document.domain === 'localhost';
   const { amount, currency } = rzOrderResponse;
 
@@ -97,8 +97,6 @@ export function getRazorPayOptions(rzOrderResponse, userInfo, programInfo, setSh
       await sendPostRequest(config.registerPayment, paymentBody);
       await sendDeleteRequest(config.deleteActivity, activityDeleteParams);
       await sendPostRequest(config.emailConfirmation(category), emailConfirmationBody);
-
-      setShowConfirmation(true);
     },
     prefill: {
       name: userInfo.fullName,

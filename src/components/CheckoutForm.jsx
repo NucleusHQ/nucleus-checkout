@@ -5,6 +5,8 @@ import TabList from "./TabList";
 import { getCurrentFormattedDate, sendPostRequest } from "../utils";
 import config from "../config";
 import { CALLBACK, COURSE, PAID, TOFU } from "../constants";
+import { useNavigate } from 'react-router-dom';
+
 
 
 const CheckoutForm = (props) => {
@@ -15,6 +17,8 @@ const CheckoutForm = (props) => {
     showSuccessMessage, showErrorMessage, showLoadingIndicator, messageApi } = props;
 
   const { templateName, teamName } = whatsappInfo || {};
+  const navigate = useNavigate();
+
 
 
   const { title: programtitle } = programInfo || {};
@@ -211,12 +215,12 @@ const CheckoutForm = (props) => {
 
         setIsLoading(false);
         showSuccessMessage();
-        setShowConfirmation(true);
 
         setTimeout(() => {
           messageApi.destroy();
         }, 2000);
 
+        navigate('/confirmation');
         handleCleanup();
 
       } catch (error) {

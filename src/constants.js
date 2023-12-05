@@ -4,3 +4,4 @@ export const PAID = "paid";
 export const CALLBACK = "callback";
 export const TOFU = "tofu";
 export const COURSE = "course"
+export const UPDATE_PROGRAM_DATA = "UPDATE_PROGRAM_DATA"
