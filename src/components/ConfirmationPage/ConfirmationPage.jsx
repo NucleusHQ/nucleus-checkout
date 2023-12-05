@@ -4,13 +4,6 @@ import { connect } from 'react-redux';
 
 const ConfirmationPage = ({ title }) => {
 
-
-  useEffect(() => {
-    window.fbq('track', 'CompleteRegistration', {
-      content_name: title + " " + 'Registration Confirmation'
-    });
-  }, [])
-
   return (
     <div className={styles.confirmationContainer}>
       <h1 className={styles.congratulations}>Congratulations!</h1>

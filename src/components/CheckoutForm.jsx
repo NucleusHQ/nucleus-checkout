@@ -221,6 +221,12 @@ const CheckoutForm = (props) => {
         }, 2000);
 
         navigate('/confirmation');
+        
+        //Meta Pixel call
+        window.fbq('track', 'CompleteRegistration', {
+          content_name: programInfo?.title + " " + 'Registration Confirmation'
+        });
+        
         handleCleanup();
 
       } catch (error) {
