@@ -23,7 +23,7 @@ const App = (props) => {
         const category = query.get('category');
         const programId = query.get('programId');
         const type = query.get('type');
-      
+
         let relevantData = {};
 
         if (category === 'tofu') {
@@ -34,7 +34,7 @@ const App = (props) => {
 
         updateProgramData(relevantData);
 
-        if (!Object.keys(relevantData).length) {
+        if (!Object.keys(relevantData).length && !location.pathname.includes('confirmation')) {
             navigate('/not-found');
         }
 

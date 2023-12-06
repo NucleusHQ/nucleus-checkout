@@ -220,7 +220,9 @@ const CheckoutForm = (props) => {
           messageApi.destroy();
         }, 2000);
 
-        navigate('/confirmation');
+        window.location.href = '/confirmation';
+
+        // navigate('/confirmation');
         
         //Meta Pixel call
         window.fbq('track', 'CompleteRegistration', {
