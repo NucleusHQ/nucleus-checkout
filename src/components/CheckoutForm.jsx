@@ -164,7 +164,9 @@ const CheckoutForm = (props) => {
         email: email, 
         templateId: emailInfo?.templateId, 
         tofuType: tofuType, 
-        eventName: programInfo?.title
+        eventName: programInfo?.title, 
+        date: date, 
+        time: time
       }
 
       let whatsAppConfirmationBody;

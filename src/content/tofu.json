@@ -8,7 +8,7 @@
             },
             "headerTitle": "You're one step closer from building a jaw-dropping Chat App!", 
             "formTitle": "Attend the masterclass for a special price of Rs 499 only", 
-            "date": "24th Oct, 2023",
+            "date": "23th Dec, 2023",
             "time": "7:00 PM - 8:00 PM",
             "primaryBtnContent": {
                 "line1": "For Special Offers Click Here", 
@@ -66,7 +66,7 @@
     "102": {
         "free": {
             "tofuType": "Webinar",
-            "date": "24th Oct, 2023",
+            "date": "23rd Dec, 2023",
             "time": "7:00 PM - 8:00 PM",
             "whatsappInfo": {
                 "templateName": "tofu_registration_confirmation", 
