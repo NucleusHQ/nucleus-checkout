@@ -89,7 +89,7 @@ const UserDetails = (props) => {
               required=""
               value={phone}
             />
-            {errors.phone && <InputError fieldName={"Phone Number"} />}
+            {errors.phone && <InputError isPhone = {true} fieldName={"Phone Number"} />}
             <label htmlFor="field-2" className="field-label-4">
               Country/Region <span className="text-span-15">*</span>
             </label>
